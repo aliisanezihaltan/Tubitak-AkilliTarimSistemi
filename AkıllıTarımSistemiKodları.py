@@ -315,4 +315,5 @@ class AkilliTarimSistemi:
 
 if __name__ == "__main__":
     sistem = AkilliTarimSistemi()
+
     sistem.calistir()
