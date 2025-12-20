@@ -189,14 +189,12 @@ class AkilliTarimSistemi:
         for ay in range(12):
             ETc = self.hesapla_ETc(ETo_aylik[ay], Kc_aylik[ay])
             Peff = Peff_aylik[ay]
-
+        
+        
             IWR = max(0, ETc - Peff)
 
-            Ks = self.hesapla_Ks(Dr_baslangic, RAW, TAW)
-            ETa = self.hesapla_ETa(ETc, Ks)
-
-            Dr_ara = Dr_baslangic - Peff + ETa
-
+            Dr_ara = Dr_baslangic + ETc - Peff
+        
             DP = 0.0
             if Dr_ara < 0:
                 DP = abs(Dr_ara)
@@ -205,6 +203,10 @@ class AkilliTarimSistemi:
                 Dr_son = TAW
             else:
                 Dr_son = Dr_ara
+        
+            Ks = self.hesapla_Ks(Dr_son, RAW, TAW)
+        
+            ETa = self.hesapla_ETa(ETc, Ks)
 
             ay_sonuclari.append({
                 'ay': ay + 1,
@@ -222,7 +224,7 @@ class AkilliTarimSistemi:
             Dr_baslangic = Dr_son
 
         return ay_sonuclari, TAW, RAW
-
+       
     def tuz_tavsiyeleri_goster(self, bitki):
         bitki_veri = self.bitkiler[bitki]
         tuz_toleransi = bitki_veri["tuz_toleransi"]
@@ -317,3 +319,4 @@ if __name__ == "__main__":
     sistem = AkilliTarimSistemi()
 
     sistem.calistir()
+
